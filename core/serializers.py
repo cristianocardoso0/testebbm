@@ -61,13 +61,14 @@ class CriarEditarItensCompraSerializer(ModelSerializer):
         model = ItensCompra
         fields = ('livro', 'quantidade')
 
-    def validate_quantidade(self, data):
+    def validate(self, data):
         if data['quantidade'] > data['livro'].quantidade:
             raise serializers.ValidationError({
                 'quantidade': 'Quantidade maior que a disponível no estoque'
             })
         return data
 
+    
 
 class CriarEditarCompraSerializer(ModelSerializer):
     itens = CriarEditarItensCompraSerializer(many=True)
